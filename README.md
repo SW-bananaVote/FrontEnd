@@ -1,3 +1,9 @@
+# Versions
+node.js: 20.17.0 <br>
+npm: 10.8.2 <br>
+vscode: 1.95.0 <br>
+
+
 # Git Convention
 
 feat : 새로운 기능 추가 <br>
