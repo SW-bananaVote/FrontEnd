@@ -7,6 +7,7 @@ export const TitleContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: linear-gradient(#5a82f1, #dae4ff);
+  margin-bottom: 100px;
 `;
 
 export const TitleImage = styled.img`
@@ -27,5 +28,5 @@ export const TitleSubText = styled.div`
   color: #455da8;
   font-weight: default;
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 `;

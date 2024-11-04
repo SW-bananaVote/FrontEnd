@@ -2,6 +2,7 @@ import React from "react";
 import {
   SubBox,
   SubBoxIcon,
+  SubBoxStat,
   SubBoxText,
   SubContainer,
   SubText,
@@ -34,6 +35,23 @@ const SubCard = () => {
             지역별 후보자 <br></br> 공약 확인
           </SubBoxText>
           <SubBoxIcon src={news_image}></SubBoxIcon>
+        </SubBox>
+      </SubContainer>
+      <SubText>
+        26.5%의 사용자가 <br></br>경제를 관심 있는 <br></br>키워드로 설정했어요!
+      </SubText>
+      <SubContainer>
+        <SubBox>
+          경제 26.5%
+          <SubBoxText>1위</SubBoxText>
+        </SubBox>
+        <SubBox>
+          안보 21.5%
+          <SubBoxText>2위</SubBoxText>
+        </SubBox>
+        <SubBox>
+          주거 17.2%
+          <SubBoxText>3위</SubBoxText>
         </SubBox>
       </SubContainer>
     </div>

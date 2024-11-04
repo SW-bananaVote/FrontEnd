@@ -10,19 +10,25 @@ export const SubContainer = styled.div`
 export const SubText = styled.div`
   font-size: 48px;
   font-weight: bold;
-  margin-top: 80px;
-  margin-left: 200px;
+  margin-left: 250px;
+  margin-top: 20px;
 `;
 
 export const SubBox = styled.div`
   position: relative;
+  display: flex;
   width: 300px;
   height: 300px;
   border: 5px solid #e9ebf8;
   border-radius: 20px;
   background-color: #e9ebf8;
   margin: 100px;
-  shadow: 5px;
+
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  font-weight: bold;
+
   &:hover {
     transform: scale(1.1);
     transition-duration: 0.3s;
