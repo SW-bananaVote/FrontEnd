@@ -1,16 +1,13 @@
 import styled from "styled-components";
 // asset import
 import bv_logo from "../../../assets/Header/bv_logo.png";
-import news_icon from "../../../assets/Header/free-icon-world-news-2644746.png";
-import candidate_icon from "../../../assets/Header/free-icon-candidate-6848155.png";
-import vote_icon from "../../../assets/Header/free-icon-info-6982988.png";
 
 const HeaderContainer = styled.div`
   height: 150px;
   display: grid;
   grid-template-columns: 15.76% 22.83% 22.83% 22.83% 15.76%;
   border: none;
-  border-bottom: 2px solid gray;
+  // border-bottom: 2px solid gray;
 `;
 // logo
 const LogoArea = styled.div`
@@ -32,6 +29,7 @@ const LogoButton = styled.img`
 // category
 const CategoryArea = styled.div`
   // background-color: skyblue;  // 임시값
+  margin: 0 13% 0 13%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +46,7 @@ const CategoryButton = styled.button`
   border: none;
   border-bottom: 0.15rem solid gray;
   // font-size: 1.5rem;
-  font-size: clamp(0.5rem, 1.3vw, 1.5rem); // 반응형 글자 크기 설정
+  font-size: clamp(1rem, 1.3vw, 1.6rem); // 반응형 글자 크기 설정
   font-weight: bold;
   &:hover {
     background-color: #fafafa; // 호버 시 배경색
@@ -56,12 +54,6 @@ const CategoryButton = styled.button`
     color: #007bff; // 호버 시 글자 색
     transform: scale(1.05); // 호버 시 살짝 크게
   }
-`;
-const CategoryIcon = styled.img`
-  width: clamp(2rem, 3vw, 2.5rem);
-  height: clamp(2rem, 3vw, 2.5rem);
-  // width: 2.5rem;
-  margin-right: 0.8rem;
 `;
 // category
 
@@ -110,17 +102,17 @@ function Header() {
       </LogoArea>
       <CategoryArea>
         <CategoryButton>
-          <CategoryIcon src={news_icon} alt="News Icon" /> 뉴스
+          뉴스
         </CategoryButton>
       </CategoryArea>
       <CategoryArea>
         <CategoryButton>
-          <CategoryIcon src={candidate_icon} alt="Category Icon" /> 후보자 정보
+          후보자 정보
         </CategoryButton>
       </CategoryArea>
       <CategoryArea>
         <CategoryButton>
-          <CategoryIcon src={vote_icon} alt="Vote Icon" /> 선거 정보
+          선거 정보
         </CategoryButton>
       </CategoryArea>
       <LoginButtonArea>
