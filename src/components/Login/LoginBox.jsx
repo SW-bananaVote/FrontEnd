@@ -3,12 +3,12 @@ import axios from 'axios';
 import {
   Container,
   Title,
-  LoginBox,
+  LoginInput,
   Input,
   Button,
   Links,
   Link
-} from "./InfoBoxStyle";
+} from "./LoginBoxStyle";
 
 const LoginComponent = () => {
   const [id, setId] = useState('');
@@ -31,7 +31,7 @@ const LoginComponent = () => {
   return (
     <Container>
       <Title href="/">Banana Vote</Title>
-      <LoginBox>
+      <LoginInput>
         <Input
           type="text"
           placeholder="아이디"
@@ -48,9 +48,9 @@ const LoginComponent = () => {
         <Links>
           <Link href="#">아이디 찾기</Link>
           <Link href="#">비밀번호 찾기</Link>
-          <Link href="#">회원가입</Link>
+          <Link href="/signup">회원가입</Link>
         </Links>
-      </LoginBox>
+      </LoginInput>
     </Container>
   );
 };

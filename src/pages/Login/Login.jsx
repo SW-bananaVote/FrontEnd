@@ -1,14 +1,29 @@
 // page import
 import Header from '../../components/Frame/Header/Header';
 import Footer from '../../components/Frame/Footer/Footer';
-import InfoBox from '../../components/Login/InfoBox';
+import LoginBox from '../../components/Login/LoginBox';
+
+import styled from 'styled-components';
+
+export const Container = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+`
 
 export default function Login() {
   return (
-    <div>
+    <Container>
       <Header></Header>
-      <InfoBox></InfoBox>
+      <LoginBox></LoginBox>
       <Footer></Footer>
-    </div>
+    </Container>
+
+
+    // <div>
+    //   <Header></Header>
+    //   <LoginBox></LoginBox>
+    //   <Footer></Footer>
+    // </div>
   );
 }
