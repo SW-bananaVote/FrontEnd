@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
+  margin: 80px 0;
   font-family: Arial, sans-serif;
 `;
 
@@ -47,7 +47,7 @@ export const Input = styled.input`
 export const Button = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: #151515;
+  background-color: #6A8EF3;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -55,7 +55,7 @@ export const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background-color: #2E2E2E;
+    background-color: #4974f5;
   }
 `;
 

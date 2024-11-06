@@ -5,15 +5,12 @@ export const HeaderContainer = styled.div`
   display: grid;
   grid-template-columns: 15.76% 22.83% 22.83% 22.83% 15.76%;
   border: none;
-  // border-bottom: 2px solid gray;
 `;
 // logo
 export const LogoArea = styled.div`
-  // background-color: red;  // 임시값
   display: flex;
   justify-content: center; // 가로 중앙
   align-items: center; // 세로 중앙
-  // border: 1px solid black;  // 임시값
 `;
 export const LogoButton = styled.img`
   margin: 20px;
@@ -26,12 +23,10 @@ export const LogoButton = styled.img`
 
 // category
 export const CategoryArea = styled.div`
-  // background-color: skyblue;  // 임시값
   margin: 0 13% 0 13%;
   display: flex;
   justify-content: center;
   align-items: center;
-  // border: 1px solid black;  // 임시값
 `;
 export const CategoryButton = styled.button`
   display: flex;
@@ -39,7 +34,7 @@ export const CategoryButton = styled.button`
   align-items: center;
   height: 60%;
   width: 80%;
-  background-color: white; // 임시값
+  background-color: white;
   cursor: pointer;
   border: none;
   border-bottom: 0.15rem solid gray;
@@ -58,8 +53,6 @@ export const CategoryButton = styled.button`
 // login
 export const LoginButtonArea = styled.div`
   display: flex;
-  // background-color: yellow;  // 임시값
-  // border: 1px solid black;  // 임시값
   justify-content: center; // 가로 중앙
   align-items: center; // 세로 중앙
   padding-top: 1em;
@@ -68,7 +61,7 @@ export const LoginButtonArea = styled.div`
 export const LoginButton = styled.button`
   width: clamp(3.5rem, 5.5vw, 5rem);
   height: clamp(1rem, 3.5vh, 2.5rem);
-  background-color: #58acfa;
+  background-color: #6A8EF3;
   cursor: pointer;
   border: none;
   border-radius: 10px;
