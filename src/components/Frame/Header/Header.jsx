@@ -25,7 +25,7 @@ const Header = () => {
   };
 
   const handleVoteClick = () => {
-    window.location.href = "/vote";
+    window.location.href = "/voteinfo";
   };
 
   const handleLoginClick = () => {
