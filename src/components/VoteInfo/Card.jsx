@@ -18,9 +18,13 @@ const CardContainer = styled.div`
   border-radius: 8px;
 `;
 
-const Title = styled.p`
+const Title = styled.a`
   font-size: 14px;
   color: #333;
   font-weight: bold;
   text-align: center;
+
+  &:hover{
+    color: black;
+  }
 `;
