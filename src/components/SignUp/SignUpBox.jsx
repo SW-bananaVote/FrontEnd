@@ -60,10 +60,18 @@ const SignUpBox = () => {
         password: form.password,
       });
       console.log('회원가입 성공:', response.data);
+      navigate('/');
       // 로그인 성공 후 추가 로직 (예: 토큰 저장, 리다이렉션 등)
     } catch (error) {
       console.error('회원가입 실패:', error);
-      // 에러 처리 로직 추가 (예: 알림 표시)
+      alert("회원가입 실패. 다른 아이디를 사용해주세요.")
+      setForm({
+        nickname: '',
+        id: '',
+        password: '',
+        confirmPassword: '',
+      });    
+      setSelectedKeywords([]);
     }
   };
 

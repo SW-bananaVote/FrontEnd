@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Title,
@@ -13,6 +14,7 @@ import {
 const LoginComponent = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
@@ -21,10 +23,12 @@ const LoginComponent = () => {
         password: password,
       });
       console.log('로그인 성공:', response.data);
-      // 로그인 성공 후 추가 로직 (예: 토큰 저장, 리다이렉션 등)
+      navigate('/');
     } catch (error) {
       console.error('로그인 실패:', error);
-      // 에러 처리 로직 추가 (예: 알림 표시)
+      alert("로그인 실패. 아이디 혹은 패스워드를 확인해주세요.");
+      setId(''); 
+      setPassword(''); 
     }
   };
 
