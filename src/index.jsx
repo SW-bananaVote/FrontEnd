@@ -6,6 +6,7 @@ import Main from "./pages/Main/Main";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp"
 import VoteInfo from "./pages/VoteInfo/VoteInfo"
+import VoteDetail from "./pages/VoteDetail/VoteDetail"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,6 +18,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/voteinfo" element={<VoteInfo />} />
+        <Route path="/votedetail" element={<VoteDetail />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -40,7 +40,7 @@ const VoteBox = ({ data }) => {
       {Array.from({ length: 4 }).map((_, rowIndex) => (
         <KeywordContainer key={rowIndex}>
           {currentItems.slice(rowIndex * 4, rowIndex * 4 + 4).map((item, index) => (
-            <KeyWord key={index} word={item.word} link={item.link}></KeyWord>
+            <KeyWord key={index} title={item.title} content={item.content}></KeyWord>
           ))}
         </KeywordContainer>
       ))}

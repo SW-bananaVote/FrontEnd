@@ -1,10 +1,10 @@
 import React from 'react';
 import { KeywordBox } from './KeywordStyle';
 
-// props = word, link
-const Keyword = ({ word, link }) => {
+// props = title, content
+const Keyword = ({ title, content }) => {
   return (
-    <KeywordBox href={link}>{word}</KeywordBox>
+    <KeywordBox to="/votedetail" state={{title, content}}>{title}</KeywordBox>
   );
 }
 
