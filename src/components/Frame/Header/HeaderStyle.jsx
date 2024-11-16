@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.div`
   height: 150px;
@@ -23,11 +24,18 @@ export const LogoButton = styled.img`
 
 // category
 export const CategoryArea = styled.div`
+position: relative;
+  display: inline-block;
   margin: 0 13% 0 13%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover div {
+    display: block; /* 하위 DropDown div 표시 */
+  }
 `;
+
 export const CategoryButton = styled.button`
   display: flex;
   justify-content: center;
@@ -38,16 +46,40 @@ export const CategoryButton = styled.button`
   cursor: pointer;
   border: none;
   border-bottom: 0.15rem solid gray;
-  // font-size: 1.5rem;
   font-size: clamp(1rem, 1.3vw, 1.6rem); // 반응형 글자 크기 설정
   font-weight: bold;
-  &:hover {
-    background-color: #fafafa; // 호버 시 배경색
-    border-bottom: 0.19rem solid #007bff;
-    color: #007bff; // 호버 시 글자 색
-    transform: scale(1.05); // 호버 시 살짝 크게
-  }
+  // &:hover {
+  //   background-color: #fafafa; // 호버 시 배경색
+  //   border-bottom: 0.19rem solid #007bff;
+  //   color: #007bff; // 호버 시 글자 색
+  //   transform: scale(1.05); // 호버 시 살짝 크게
+  // }
 `;
+
+export const DropDown = styled.div`
+  display: none;
+  position: absolute;
+  top: 100%;
+  width: 80%;
+  z-index: 1;
+  background-color: white;
+  padding-bottom: 1em;
+  border-radius: 5%;
+  border: 1px solid black;
+`
+
+export const DropDownLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+  color: black;
+  text-decoration: none;
+  font-size: 1.2em;
+  &:hover{
+    font-weight: 500;
+  }
+`
+
 // category
 
 // login

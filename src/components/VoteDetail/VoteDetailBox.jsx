@@ -1,45 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import {
+  VoteDetailContainer,
+  DetailBox,
+  Title,
+  Content,
+  GoList
+} from "./VoteDetailBoxStyle"
 
-export const VoteDetailContainer = styled.div`
-  display: flex;
-  padding: 0 0 2em 0;
-  flex-direction: column;
-  align-items: center;
-`
-
-export const DetailBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-bottom: 0.2em solid gray;
-  width: 70%;
-  margin: 0 0 1em 0;
-  height: 100%;
-  `
-
-export const Title = styled.h1`
-  text-align: center;
-  padding: 0.5em 0;
-  font-size: 1.5em;
-  background-color: gray;
-  width: 100%;
-`
-
-export const Content = styled.div`
-  white-space: pre-line;
-  width: 90%;
-  text-align: left;
-  padding-bottom: 2em;
-`
-
-export const GoList = styled.button`
-  width: 7vw;
-  height: 4vh;
-  border-radius: 5%;
-  font-size: 1em;
-  background-color: #6A8EF3;
-`
 
 const VoteDetailBox = () => {
   const navigate = useNavigate();
