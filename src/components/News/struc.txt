@@ -1,0 +1,48 @@
+-- 컴포넌트 구조 --
+export const Parent = () =>{
+  return(
+    <Middle data={rawData}/>
+  );
+}
+
+export const Middle = ({data}) =>{
+  return(
+    {data.map((item, index) => (
+      <Child key={index} item={datum} >
+    ))}
+  );
+}
+
+export const Child = ({data}) => {
+  return(
+    주제: {data.title}
+    내용: {data.content}
+    설명: {data.description}
+  );
+}
+
+-- 컴포넌트 초기 프롭스 --
+ComponentName.defaultProps = {
+  data1: "sth",
+  data2: "sth",
+};
+
+-- 통신 처리 --
+const Comp = () =>{
+  const [data, setData] = useState();
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try{
+        const response = await fetch("링크"); // 통신 요청 
+        const result = await response.json(); // json 파싱
+        setData(result);
+      }
+      catch(error){
+        const localResponse = await fetch("로컬 주소");
+        const localData = await localResponse.json();
+        setData(localData);
+      }
+    };
+  }, []); // 빈 배열로 컴포넌트 마운트 시 한 번만 실행
+}
