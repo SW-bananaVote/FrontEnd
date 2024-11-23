@@ -4,10 +4,11 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom"; // page import
 import Main from "./pages/Main/Main";
 import Login from "./pages/Login/Login";
-import SignUp from "./pages/SignUp/SignUp"
-import VoteInfo from "./pages/VoteInfo/VoteInfo"
-import VoteDetail from "./pages/VoteDetail/VoteDetail"
-import News from "./pages/News/News"
+import SignUp from "./pages/SignUp/SignUp";
+import VoteInfo from "./pages/VoteInfo/VoteInfo";
+import VoteDetail from "./pages/VoteDetail/VoteDetail";
+import News from "./pages/News/News";
+import VoteLocation from "./pages/VoteLocation/VoteLocation";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -21,6 +22,7 @@ root.render(
         <Route path="/voteinfo" element={<VoteInfo />} />
         <Route path="/votedetail" element={<VoteDetail />} />
         <Route path="/news" element={<News />} />
+        <Route path="/votelocation" element={<VoteLocation />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
