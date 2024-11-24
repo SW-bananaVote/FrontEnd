@@ -14,7 +14,6 @@ const DayNews = () => {
   const fetchStaticData = async (date) => {
     try {
       const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
-
       const response = await fetch(`서버 URL?date=${formattedDate}`);
       const staticData = await response.json();
       setData(staticData);
@@ -25,16 +24,21 @@ const DayNews = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { // 날짜가 변경될 때마다 데이터 가져오기
     fetchStaticData(selectedDate);
   }, [selectedDate]);
+
+  const handleDateChange = (date) => { // 날짜 변경 핸들러
+    setSelectedDate(date);
+    alert("날짜를 변경하였습니다. 데이터를 다시 가져옵니다.")
+  };
 
   return (
     <NewsContainer>
       <NewsCategory>
         날짜별 뉴스
       </NewsCategory>
-      <Calender />
+      <Calender selectedDate={selectedDate} onDateChange={handleDateChange} />
       <NewsLink>
         {data.map((item, index) => (
           <NewsFactor key={index} item={item} />
