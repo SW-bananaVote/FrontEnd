@@ -10,20 +10,13 @@ const VoteInfoBox = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 서버에서 데이터 가져오기 시도
-        const response = await fetch("https://localhost:8080/get/voteinfo");
-        const serverData = await response.json();
-        setData(serverData);
-        setFilteredData(serverData); // 초기 데이터로 필터링 데이터 설정
-        // alert
-        alert('서버에서 데이터 가져오기');
-      } catch (error) {
         const localResponse = await fetch('/DummyData/VoteInfo/VoteInfo.json');
         const localData = await localResponse.json();
         setData(localData);
         setFilteredData(localData); // 초기 데이터로 필터링 데이터 설정
+      } catch (error) {
         // alert
-        alert('로컬에서 더미데이터 가져오기');
+        alert('데이터 가져오기 실패(로컬 데이터)');
       }
     }
 

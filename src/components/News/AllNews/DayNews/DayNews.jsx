@@ -15,7 +15,6 @@ const DayNews = () => {
     try {
       const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
 
-
       const response = await fetch(`서버 URL?date=${formattedDate}`);
       const staticData = await response.json();
       setData(staticData);

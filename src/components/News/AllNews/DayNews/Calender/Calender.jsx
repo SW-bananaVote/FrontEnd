@@ -8,6 +8,7 @@ export const CalenderBox = styled.div`
   display: inline-block;
 `
 
+// 날짜 좀 굵게 만들기
 const Calender = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
