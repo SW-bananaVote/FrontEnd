@@ -45,23 +45,10 @@ const VoteLocationBox = () => {
       // 사용자가 지역을 선택했을 때 지도 중심 변경
       if (selectedValue) {
         const regionCoordinates = {
-          서울: { lat: 37.5665, lng: 126.9780 },
-          인천: { lat: 37.4563, lng: 126.7052 },
-          경기도: { lat: 37.4138, lng: 127.5183 },
-          대전: { lat: 36.3504, lng: 127.3845 },
-          충청남도: { lat: 36.6589, lng: 126.6727 },
-          충청북도: { lat: 36.6357, lng: 127.4917 },
-          세종시: { lat: 36.4801, lng: 127.2890 },
-          부산: { lat: 35.1796, lng: 129.0756 },
-          대구: { lat: 35.8714, lng: 128.6014 },
-          울산: { lat: 35.5396, lng: 129.3114 },
-          경상남도: { lat: 35.4606, lng: 128.2132 },
-          경상북도: { lat: 36.4919, lng: 128.8889 },
-          광주: { lat: 35.1595, lng: 126.8526 },
-          전라남도: { lat: 34.8679, lng: 126.9910 },
-          전라북도: { lat: 35.7175, lng: 127.1530 },
-          강원도: { lat: 37.8813, lng: 127.7298 },
-          제주도: { lat: 33.4996, lng: 126.5312 },
+          서울특별시: { lat: 37.5905, lng: 126.9906 },
+          부산광역시: { lat: 35.2111, lng: 129.0783 },
+          대구광역시: { lat: 35.8802, lng: 128.5566 },
+          제주특별자치도: { lat: 33.2532, lng: 126.5618 }
         };
 
         const coords = regionCoordinates[selectedValue];
@@ -76,21 +63,70 @@ const VoteLocationBox = () => {
   }, [selectedValue]); // 선택된 지역 변경 시 실행
 
   // 통신 처리 함수
-  const fetchData = async (url, payload) => {
+  const fetchData = async (location, limit) => {
+    console.log("데이터 패칭 시작");
     try {
+      // URL에 PathVariable 추가
+      const url = `http://43.203.35.140:8080/poll/sdName/${location}`;
+
       const response = await fetch(url, {
-        method: "POST",
+        method: "GET", // PathVariable은 보통 GET 요청에 많이 사용됩니다.
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
       });
+
+      console.log(response);
 
       if (!response.ok) throw new Error("서버 오류");
 
-      return await response.json();
+      const data = await response.json();
+
+      console.log(data);
+
+      const kakao = window.kakao;
+      const geocoder = new kakao.maps.services.Geocoder();
+
+      // 주소를 위도/경도로 반환하는 함수
+      const addressToCoords = (address) => {
+        return new Promise((resolve, reject) => {
+          geocoder.addressSearch(address, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+              resolve({ lat: coords.getLat(), lng: coords.getLng() });
+            } else {
+              reject(new Error("Geocoding 실패"));
+            }
+          });
+        });
+      };
+
+      // 데이터를 변환 및 제한 (Promise.all로 비동기 병렬 처리)
+      const limitedData = await Promise.all(
+        data.slice(0, limit).map(async (item, index) => {
+          try {
+            const { lat, lng } = await addressToCoords(item.addr); // Geocoding 호출
+            return {
+              name: `${index + 1}. ${item.psName} (${item.placeName})`,
+              lat,
+              lng,
+            };
+          } catch (geoError) {
+            console.error("Geocoding 실패:", geoError.message); // <--- 에러 메시지 출력 개선
+            return {
+              name: `${item.psName} (${item.placeName})`,
+              lat: null,
+              lng: null, // Geocoding 실패 시 null 값으로 처리
+            };
+          }
+        })
+      );
+
+      console.log("Parsed Data:", limitedData);
+
+      return limitedData;
     } catch (error) {
-      console.error("통신 오류:", error);
+      console.error("통신 오류:", error.message);
       return null;
     }
   };
@@ -143,7 +179,6 @@ const VoteLocationBox = () => {
     setMarkerData(markerEntries);
   };
 
-  // 검색 핸들러
   const handleSearch = async () => {
     if (!selectedRegion || !selectedValue) {
       alert("권역과 지역을 모두 선택하세요.");
@@ -151,10 +186,7 @@ const VoteLocationBox = () => {
     }
 
     // 서버에서 데이터 가져오기
-    const data = await fetchData("백엔드 주소", {
-      region: selectedRegion,
-      location: selectedValue,
-    });
+    const data = await fetchData(selectedValue);
 
     if (data) {
       updateMapMarkers(data);
@@ -169,6 +201,7 @@ const VoteLocationBox = () => {
       }
     }
   };
+
 
   const handleReset = () => {
     setSelectedRegion(""); // 권역 초기화

@@ -8,15 +8,11 @@ import {
   Button
 } from "./RegionSelectorStyle";
 
-
 const RegionSelector = ({ selectedRegion, setSelectedRegion, selectedValue, setSelectedValue, onSearch, onReset }) => {
   const regions = {
-    수도권: ["서울", "인천", "경기도"],
-    충청권: ["대전", "충청남도", "충청북도", "세종시"],
-    영남권: ["부산", "대구", "울산", "경상남도", "경상북도"],
-    호남권: ["광주", "전라남도", "전라북도"],
-    강원권: ["강원도"],
-    제주권: ["제주도"],
+    수도권: ["서울특별시"],
+    영남권: ["부산광역시", "대구광역시"],
+    제주권: ["제주특별자치도"]
   };
 
   return (

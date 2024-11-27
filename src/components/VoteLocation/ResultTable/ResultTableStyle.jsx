@@ -4,7 +4,7 @@ export const TableContainer = styled.div`
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  width: 42vw;
+  width: 45vw;
   margin: 20px 0 0 0;
 `;
 
