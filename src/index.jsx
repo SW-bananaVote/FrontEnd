@@ -9,7 +9,7 @@ import VoteInfo from "./pages/VoteInfo/VoteInfo";
 import VoteDetail from "./pages/VoteDetail/VoteDetail";
 import News from "./pages/News/News";
 import Candidate from "./pages/Candidate/Candidate";
-
+import VoteLocation from "./pages/VoteLocation/VoteLocation";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -23,6 +23,7 @@ root.render(
         <Route path="/voteinfo" element={<VoteInfo />} />
         <Route path="/votedetail" element={<VoteDetail />} />
         <Route path="/news" element={<News />} />
+        <Route path="/votelocation" element={<VoteLocation />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

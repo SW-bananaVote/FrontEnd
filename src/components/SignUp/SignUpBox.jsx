@@ -17,8 +17,35 @@ import {
   CancelButton
 } from "./SignUpBoxStyle";
 
+import styled from 'styled-components';
+export const Temp = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const TempButton = styled.button`
+  background-color: #6A8EF3;
+  border: 2px solid black;
+  border-radius: 10%;
+  height: 30px;
+  margin-left: 10px;
+  color: black;
+  cursor: pointer;
+`
+
+export const Temp2 = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const TempP = styled.p`
+  font-size: 13px;
+`
+
 
 const SignUpBox = () => {
+  const [check, setCheck] = useState("*");
   const navigate = useNavigate();
   const [form, setForm] = useState({
     nickname: '',
@@ -27,7 +54,6 @@ const SignUpBox = () => {
     confirmPassword: '',
   });
   const [selectedKeywords, setSelectedKeywords] = useState([]);
-
   const keywords = ['안보', '경제', '교육', '보건', '교통', '복지', '주거', '고용'];
 
   const handleInputChange = (e) => {
@@ -36,6 +62,11 @@ const SignUpBox = () => {
       ...form,
       [name]: value,
     });
+
+    // 아이디 입력값이 변경되면 check 상태 초기화
+    if (name === "id") {
+      setCheck("*");
+    }
   };
 
   const toggleKeyword = (keyword) => {
@@ -51,13 +82,13 @@ const SignUpBox = () => {
     });
   };
 
-
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('localhost:8080/signup', {
+      const response = await axios.post('http://43.203.35.140:8080/user/register', {
         nickname: form.nickname,
         id: form.id,
         password: form.password,
+        keywords: selectedKeywords,
       });
       console.log('회원가입 성공:', response.data);
       navigate('/');
@@ -70,7 +101,7 @@ const SignUpBox = () => {
         id: '',
         password: '',
         confirmPassword: '',
-      });    
+      });
       setSelectedKeywords([]);
     }
   };
@@ -78,6 +109,31 @@ const SignUpBox = () => {
   const handleCancel = () => {
     navigate("/");
   };
+
+  const loginCheck = async () => {
+    if (!form.id.trim()) {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://43.203.35.140:8080/user/${form.id}`);
+
+      if (response.ok) {
+        alert("로그인 성공");
+        setCheck("사용 가능");
+        console.log(response);
+      } else {
+        setCheck("아이디 중복");
+        alert("로그인 실패")
+      }
+
+    } catch (error) {
+      alert("로그인 실패");
+      console.log("로그인 실패");
+      setCheck("통신 오류");
+    }
+  }
 
   return (
     <Container>
@@ -94,7 +150,13 @@ const SignUpBox = () => {
             />
           </InputWrapper>
           <InputWrapper>
-            <Label>아이디</Label>
+            <Temp>
+              <Label>아이디</Label>
+              <Temp2>
+                <TempP>{check}</TempP>
+                <TempButton onClick={loginCheck}>중복 확인</TempButton>
+              </Temp2>
+            </Temp>
             <Input
               type="text"
               name="id"
