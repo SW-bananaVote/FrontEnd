@@ -64,3 +64,115 @@ export const ViewButton = styled.button`
     background-color: #444;
   }
 `;
+
+export const DropdownContainer = styled.div`
+  position: relative;
+  width: 200px;
+  margin: 50px;
+`;
+
+// 드롭다운 버튼
+export const DropdownButton = styled.button`
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  text-align: left;
+  background-color: white;
+  border: 1px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+
+  &:hover {
+    border-color: #5a82f1;
+  }
+
+  img {
+    width: 12px;
+    transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+    transition: transform 0.3s;
+  }
+`;
+
+// 옵션 목록
+export const DropdownMenu = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  font-weight: bold;
+`;
+
+// 옵션 항목
+export const DropdownItem = styled.li`
+  button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #5a82f1;
+      color: #fff;
+    }
+
+    ${({ isSelected }) =>
+      isSelected &&
+      `
+      background-color: #f0e9ff; /* 선택된 항목 배경색 */
+    `}
+  }
+`;
+
+export const DropdownSection = styled.div`
+  display: flex;
+  margin-left: 280px;
+  margin-top: 60px;
+`;
+
+export const SearchText = styled.div`
+  font-size: 44px;
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-left: 320px;
+`;
+
+export const SearchBar = styled.input`
+  width: 200px;
+  margin: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 18px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+
+  &:hover {
+    border-color: #5a82f1;
+  }
+`;
