@@ -61,7 +61,7 @@ export const DropDown = styled.div`
   position: absolute;
   top: 100%;
   width: 80%;
-  z-index: 1;
+  z-index: 100;
   background-color: white;
   padding-bottom: 1em;
   border-radius: 5%;

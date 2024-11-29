@@ -10,6 +10,8 @@ import VoteDetail from "./pages/VoteDetail/VoteDetail";
 import News from "./pages/News/News";
 import Candidate from "./pages/Candidate/Candidate";
 import VoteLocation from "./pages/VoteLocation/VoteLocation";
+import FindID from "./components/Login/Find/FindID";
+import FindPS from "./components/Login/Find/FindPS";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -24,6 +26,8 @@ root.render(
         <Route path="/votedetail" element={<VoteDetail />} />
         <Route path="/news" element={<News />} />
         <Route path="/votelocation" element={<VoteLocation />} />
+        <Route path="/findid" element={<FindID />} />
+        <Route path="/findps" element={<FindPS />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

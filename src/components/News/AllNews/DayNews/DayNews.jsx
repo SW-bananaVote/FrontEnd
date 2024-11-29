@@ -10,11 +10,20 @@ const DayNews = () => {
   const fetchStaticData = async (date) => {
     try {
       const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
-      const response = await fetch(`서버 URL?date=${formattedDate}`);
+      const REACT_APP_BASE = process.env.REACT_APP_BASE;
+      // `${REACT_APP_BASE}/news/date/${formattedDate}`
+      const response = await fetch("서버 URL");
+      console.log(formattedDate);
       const staticData = await response.json();
       setData(staticData);
     } catch (error) {
-      const localResponse = await fetch("/DummyData/News/Day.json");
+      const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
+      const today = new Date().toISOString().split("T")[0];
+      const url = formattedDate === today 
+      ? `/DummyData/News/Day.json` 
+      : `/DummyData/News/DaySub.json`;
+
+      const localResponse = await fetch(url)
       const localStaticData = await localResponse.json();
       setData(localStaticData);
     }

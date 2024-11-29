@@ -67,7 +67,8 @@ const VoteLocationBox = () => {
     console.log("데이터 패칭 시작");
     try {
       // URL에 PathVariable 추가
-      const url = `http://43.203.35.140:8080/poll/sdName/${location}`;
+      const REACT_APP_BASE = process.env.REACT_APP_BASE;
+      const url = `${REACT_APP_BASE}/poll/sdName/${location}`;
 
       const response = await fetch(url, {
         method: "GET", // PathVariable은 보통 GET 요청에 많이 사용됩니다.

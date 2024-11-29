@@ -18,13 +18,13 @@ import {
 } from "./SignUpBoxStyle";
 
 import styled from 'styled-components';
-export const Temp = styled.div`
+export const RowContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
 
-export const TempButton = styled.button`
+export const CheckButton = styled.button`
   background-color: #6A8EF3;
   border: 2px solid black;
   border-radius: 10%;
@@ -34,21 +34,23 @@ export const TempButton = styled.button`
   cursor: pointer;
 `
 
-export const Temp2 = styled.div`
+export const CheckBox = styled.div`
   display: flex;
   align-items: center;
 `
 
-export const TempP = styled.p`
+export const CheckP = styled.p`
   font-size: 13px;
 `
 
 
 const SignUpBox = () => {
-  const [check, setCheck] = useState("*");
+  const [IDCheck, setIDCheck] = useState("*");
+  const [PSCheck, setPSCheck] = useState("*");
   const navigate = useNavigate();
   const [form, setForm] = useState({
     nickname: '',
+    email: '',
     id: '',
     password: '',
     confirmPassword: '',
@@ -65,7 +67,19 @@ const SignUpBox = () => {
 
     // 아이디 입력값이 변경되면 check 상태 초기화
     if (name === "id") {
-      setCheck("*");
+      setIDCheck("*");
+    }
+
+    // 비밀번호와 비밀번호 확인 값 비교
+    if (name === "password" || name === "confirmPassword") {
+      const password = name === "password" ? value : form.password;
+      const confirmPassword = name === "confirmPassword" ? value : form.confirmPassword;
+
+      if (password && confirmPassword) {
+        setPSCheck(password === confirmPassword ? "일치" : "불일치");
+      } else {
+        setPSCheck("*");
+      }
     }
   };
 
@@ -83,9 +97,28 @@ const SignUpBox = () => {
   };
 
   const handleSubmit = async () => {
+    if (IDCheck !== "사용 가능") {
+      alert("아이디 중복을 확인해주세요.");
+      return;
+    }
+
+    if(PSCheck !== "일치"){
+      alert("비밀번호를 확인해주세요.");
+      return;
+    }
+
     try {
-      const response = await axios.post('http://43.203.35.140:8080/user/register', {
+      const REACT_APP_BASE = process.env.REACT_APP_BASE;
+      // {
+      //   "nickname": "yshan",
+      //   "email": "aszx4949@naver.com"
+      //   "id": "yunsu0407",
+      //   "password": "dbstn123",
+      //   "keywords": ["교육", "교통", "교육"]
+      // }
+      const response = await axios.post(`${REACT_APP_BASE}/user/register`, {
         nickname: form.nickname,
+        email: form.email,
         id: form.id,
         password: form.password,
         keywords: selectedKeywords,
@@ -117,21 +150,22 @@ const SignUpBox = () => {
     }
 
     try {
-      const response = await fetch(`http://43.203.35.140:8080/user/${form.id}`);
+      const REACT_APP_BASE = process.env.REACT_APP_BASE;
+      const response = await fetch(`${REACT_APP_BASE}/user/${form.id}`);
 
       if (response.ok) {
-        alert("로그인 성공");
-        setCheck("사용 가능");
+        alert("사용 가능");
+        setIDCheck("사용 가능");
         console.log(response);
       } else {
-        setCheck("아이디 중복");
-        alert("로그인 실패")
+        setIDCheck("아이디 중복");
+        alert("사용 불가능")
       }
 
     } catch (error) {
-      alert("로그인 실패");
-      console.log("로그인 실패");
-      setCheck("통신 오류");
+      alert("통신 오류");
+      console.log("통신 오류");
+      setIDCheck("통신 오류");
     }
   }
 
@@ -150,13 +184,22 @@ const SignUpBox = () => {
             />
           </InputWrapper>
           <InputWrapper>
-            <Temp>
+            <Label>이메일</Label>
+            <Input
+              type="text"
+              name="email"
+              value={form.email}
+              onChange={handleInputChange}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <RowContainer>
               <Label>아이디</Label>
-              <Temp2>
-                <TempP>{check}</TempP>
-                <TempButton onClick={loginCheck}>중복 확인</TempButton>
-              </Temp2>
-            </Temp>
+              <CheckBox>
+                <CheckP>{IDCheck}</CheckP>
+                <CheckButton onClick={loginCheck}>중복 확인</CheckButton>
+              </CheckBox>
+            </RowContainer>
             <Input
               type="text"
               name="id"
@@ -174,7 +217,12 @@ const SignUpBox = () => {
             />
           </InputWrapper>
           <InputWrapper>
-            <Label>패스워드 확인</Label>
+            <RowContainer>
+              <Label>패스워드 확인</Label>
+              <CheckBox>
+                <CheckP>비밀번호 확인: {PSCheck}</CheckP>
+              </CheckBox>
+            </RowContainer>
             <Input
               type="password"
               name="confirmPassword"

@@ -13,6 +13,8 @@ const HotNews = () => {
   useEffect(() => {
     const fetchStaticData = async () => {
       try {
+      const REACT_APP_BASE = process.env.REACT_APP_BASE;
+        // `${REACT_APP_BASE}/news/headline`
         const response = await fetch("서버 URL");
         const staticData = await response.json();
         setData(staticData);

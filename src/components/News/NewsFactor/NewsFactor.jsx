@@ -26,13 +26,13 @@ const FactorTitle = styled.p`
 
 const NewsFactor = ({ item }) => {
   return (
-    <FactorLink to={item.newsUrl}>
+    <FactorLink to={item.url}>
       <FactorImg
         src={item.imgUrl}
         alt="다음 뉴스 이미지"
       />
       <FactorTitle>
-        {item.newsTitle}
+        {item.title}
       </FactorTitle>
     </FactorLink>
   );

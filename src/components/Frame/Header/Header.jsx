@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 // asset import
 import bv_logo from "../../../assets/Header/bv_logo.png";
 // styled-component import
@@ -14,6 +15,20 @@ import {
 } from "./HeaderStyle"
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // 로그인 여부 확인 (예: localStorage에 토큰 확인)
+    const token = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!token); // 토큰이 있으면 true
+  }, []);
+
+  const handleLogout = () => {
+    // 로그아웃 처리
+    localStorage.removeItem("accessToken");
+    setIsLoggedIn(false);
+    window.location.href = "/";
+  };
   return (
     <HeaderContainer>
       <LogoArea>
@@ -41,17 +56,23 @@ const Header = () => {
       <CategoryArea>
         <CategoryButton onClick={() => window.location.href = "/voteinfo"}>
           선거 정보
-          
+
         </CategoryButton>
 
         <DropDown>
-            <DropDownLink to="/voteinfo">선거 정책</DropDownLink><br />
-            <DropDownLink to="/votelocation">투표소 위치</DropDownLink>
-          </DropDown>
+          <DropDownLink to="/voteinfo">선거 정책</DropDownLink><br />
+          <DropDownLink to="/votelocation">투표소 위치</DropDownLink>
+        </DropDown>
       </CategoryArea>
 
       <LoginButtonArea>
-        <LoginButton onClick={() => window.location.href = "/login"}>🔑 로그인</LoginButton>
+        {isLoggedIn ? (
+          <LoginButton onClick={handleLogout}>🔓 로그아웃</LoginButton>
+        ) : (
+          <LoginButton onClick={() => (window.location.href = "/login")}>
+            🔑 로그인
+          </LoginButton>
+        )}
       </LoginButtonArea>
     </HeaderContainer>
   );
