@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from "react";
+import bv_qr from "../../../assets/Donation/bv_qr.png";
 import {
   FooterContainer,
   DeveloperInfo,
   ProfileImage,
   CopyrightText,
-  SupportButton
-} from "./FooterSytle"
+  SupportButton,
+  ModalOverlay,
+  ModalContent,
+  CloseButton
+} from "./FooterSytle";
 
 const Footer = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <FooterContainer>
       <DeveloperInfo>
@@ -19,9 +28,28 @@ const Footer = () => {
           </CopyrightText>
         </div>
       </DeveloperInfo>
-      <SupportButton>
+      <SupportButton onClick={openModal}>
         🤍 개발자에게 후원
       </SupportButton>
+
+      {/* 모달 창 */}
+      {isModalOpen && (
+        <ModalOverlay onClick={closeModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <h2 style={{ color: "black" }}>개발자에게 커피 한 잔</h2>
+            <p style={{ color: "black" }}>아래의 QR 코드를 이용해 후원이 가능합니다.</p>
+            <div style={{ textAlign: "center" }}>
+              {/* QR 코드 이미지 또는 후원 링크 */}
+              <img
+                src={bv_qr}
+                alt="후원 QR 코드"
+                style={{ width: "200px", height: "200px" }}
+              />
+            </div>
+            <CloseButton onClick={closeModal}>닫기</CloseButton>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </FooterContainer>
   );
 };

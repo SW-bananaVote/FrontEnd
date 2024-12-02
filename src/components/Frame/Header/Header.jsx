@@ -73,6 +73,26 @@ const Header = () => {
             🔑 로그인
           </LoginButton>
         )}
+
+        {/* 테스트용 버튼 */}
+        {!isLoggedIn && (
+          <button
+            onClick={() => {
+              localStorage.setItem("accessToken", "testAccessToken");
+              setIsLoggedIn(true);
+            }}
+            style={{
+              marginLeft: "10px",
+              padding: "5px 10px",
+              backgroundColor: "gray",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+            }}
+          >
+            🔑 테스트 로그인
+          </button>
+        )}
       </LoginButtonArea>
     </HeaderContainer>
   );

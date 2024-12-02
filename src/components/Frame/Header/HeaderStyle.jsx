@@ -91,7 +91,7 @@ export const LoginButtonArea = styled.div`
 `;
 
 export const LoginButton = styled.button`
-  width: clamp(3.5rem, 5.5vw, 5rem);
+  width: clamp(3.5rem, 6vw, 6rem);
   height: clamp(1rem, 3.5vh, 2.5rem);
   background-color: #6A8EF3;
   cursor: pointer;

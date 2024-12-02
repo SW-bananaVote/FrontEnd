@@ -11,7 +11,9 @@ import {
 const RegionSelector = ({ selectedRegion, setSelectedRegion, selectedValue, setSelectedValue, onSearch, onReset }) => {
   const regions = {
     수도권: ["서울특별시"],
-    영남권: ["부산광역시", "대구광역시"],
+    영남권: ["부산광역시", "대구광역시", "울산광역시"],
+    충청권: ["대전광역시"],
+    강원권: ["강원특별자치도"],
     제주권: ["제주특별자치도"]
   };
 

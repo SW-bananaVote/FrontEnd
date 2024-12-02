@@ -56,7 +56,7 @@ const SignUpBox = () => {
     confirmPassword: '',
   });
   const [selectedKeywords, setSelectedKeywords] = useState([]);
-  const keywords = ['안보', '경제', '교육', '보건', '교통', '복지', '주거', '고용'];
+  const keywords = ['안보', '경제', '교육', '보건', '교통', '복지', '주거', '고용', '환경', '예술', '문화', '가족'];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -102,7 +102,7 @@ const SignUpBox = () => {
       return;
     }
 
-    if(PSCheck !== "일치"){
+    if (PSCheck !== "일치") {
       alert("비밀번호를 확인해주세요.");
       return;
     }

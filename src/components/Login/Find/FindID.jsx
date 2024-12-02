@@ -36,6 +36,13 @@ const FindID = () => {
     }
   };
 
+  // 테스트용 버튼의 동작
+  const handleTestFind = () => {
+    setEmail("test@example.com"); // 테스트 이메일
+    setFoundID("testUser123"); // 테스트 아이디
+    setError(null); // 에러 초기화
+  };
+
   return (
     <FindContainer>
       <h1>아이디 찾기</h1>
@@ -51,6 +58,15 @@ const FindID = () => {
         />
         <FindButton type="submit">아이디 찾기</FindButton>
       </FindForm>
+
+      {/* 테스트용 버튼 */}
+      <FindButton
+        type="button"
+        style={{ marginTop: "10px", backgroundColor: "gray" }}
+        onClick={handleTestFind}
+      >
+        테스트 아이디 찾기
+      </FindButton>
 
       {/* 결과 표시 */}
       {foundID && <p>회원님의 아이디는 <strong>{foundID}</strong>입니다.</p>}
