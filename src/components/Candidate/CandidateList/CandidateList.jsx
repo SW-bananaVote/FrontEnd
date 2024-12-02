@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CandidateListContainer,
   CandidateCard,
@@ -36,10 +37,12 @@ const CandidateList = () => {
   const partyRef = useRef(null);
   const wiwNameRef = useRef(null);
   const loaderRef = useRef(null); // Intersection Observer 트리거
+  const navigate = useNavigate();
 
   useEffect(() => {
     // API 호출
-    fetch("http://43.203.35.140:8080/candidate")
+    const REACT_APP_BASE = process.env.REACT_APP_BASE;
+    fetch(`${REACT_APP_BASE}/candidate/all`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -231,7 +234,11 @@ const CandidateList = () => {
             <PartyText>{candidate.jdName}</PartyText>
             <PartyText>{candidate.wiwName}</PartyText>
             <NameText>{candidate.name}</NameText>
-            <ViewButton>보러가기</ViewButton>
+            <ViewButton
+              onClick={() => navigate(`/candidate/detail/${candidate.id}`)} // 상세 페이지로 이동
+            >
+              보러가기
+            </ViewButton>
           </CandidateCard>
         ))}
       </CandidateListContainer>
