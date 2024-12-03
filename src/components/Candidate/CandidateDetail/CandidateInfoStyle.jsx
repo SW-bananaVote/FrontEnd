@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ProfileContainer = styled.div`
   width: 1200px;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 80px;
   padding: 20px;
   background-color: #e0e0e0;
   border-radius: 10px;
@@ -44,19 +44,46 @@ export const ProfileTitle = styled.div`
 
 export const ProfileSubTitle = styled.div`
   font-size: 27px;
+  margin-bottom: 30px;
+`;
+
+export const SecondContainer = styled.div`
+  width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+
   margin-bottom: 50px;
+`;
+
+export const SecondBox = styled.div`
+  display: flex;
+  background-color: #fff; /* 배경색 설정 */
+  margin-left: 100px;
+  margin-top: 3px;
+  border-radius: 10px;
+  margin-right: 100px;
+  margin-bottom: 20px;
+`;
+
+export const CategoryText = styled.div`
+  font-size: 27px;
+  font-weight: bold;
+  margin-left: 40px;
+  margin-top: 40px;
 `;
 
 export const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 30px;
-  width: 80%;
-
-  margin-left: 100px;
+  margin-top: 20px;
+  width: 800px;
+  margin-left: 30px;
   padding: 20px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  background-color: #fff; /* 배경색 설정 */
 `;

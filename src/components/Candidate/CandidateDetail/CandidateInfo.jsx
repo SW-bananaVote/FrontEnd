@@ -5,13 +5,18 @@ import {
   ProfileTitle,
   ProfileSubTitle,
   ProfileTitleContainer,
+  SecondContainer,
   DetailContainer,
+  SecondBox,
+  CategoryText,
 } from "./CandidateInfoStyle";
 import { useParams, useNavigate } from "react-router-dom";
 
 import minjuImg from "../../../assets/Candidate/PartyImg/더불어민주당.svg";
 import gukhimImg from "../../../assets/Candidate/PartyImg/국민의힘.svg";
 import noksakImg from "../../../assets/Candidate/PartyImg/녹색정의당.svg";
+import saeroImg from "../../../assets/Candidate/PartyImg/새로운미래.png";
+import gaehyukImg from "../../../assets/Candidate/PartyImg/개혁신당.png";
 import defaultImg from "../../../assets/Candidate/PartyImg/무소속.svg";
 
 const CandidateInfo = () => {
@@ -72,6 +77,10 @@ const CandidateInfo = () => {
                 ? gukhimImg
                 : candidate.jdName === "녹색정의당"
                 ? noksakImg
+                : candidate.jdName === "새로운미래"
+                ? saeroImg
+                : candidate.jdName === "개혁신당"
+                ? gaehyukImg
                 : defaultImg
             })`,
           }}
@@ -83,9 +92,22 @@ const CandidateInfo = () => {
           </ProfileSubTitle>
         </ProfileTitleContainer>
       </ProfileContainer>
-      <ProfileContainer>
-        <DetailContainer></DetailContainer>
-      </ProfileContainer>
+      <SecondContainer>
+        <SecondBox>
+          <CategoryText>약력</CategoryText>
+          <DetailContainer>
+            <ProfileSubTitle>{candidate.career1}</ProfileSubTitle>
+            <ProfileSubTitle>{candidate.career2}</ProfileSubTitle>
+          </DetailContainer>
+        </SecondBox>
+        <SecondBox>
+          <CategoryText>약력</CategoryText>
+          <DetailContainer>
+            <ProfileSubTitle>{candidate.career1}</ProfileSubTitle>
+            <ProfileSubTitle>{candidate.career2}</ProfileSubTitle>
+          </DetailContainer>
+        </SecondBox>
+      </SecondContainer>
     </div>
   );
 };
