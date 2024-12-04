@@ -12,6 +12,7 @@ import Candidate from "./pages/Candidate/Candidate";
 import VoteLocation from "./pages/VoteLocation/VoteLocation";
 import FindID from "./components/Login/Find/FindID";
 import FindPS from "./components/Login/Find/FindPS";
+import CandidateDetail from "./pages/CandidateDetail/CandidateDetail";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -22,6 +23,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/candidate" element={<Candidate />} />
+        <Route path="/candidate/detail/:id" element={<CandidateDetail />} />
         <Route path="/voteinfo" element={<VoteInfo />} />
         <Route path="/votedetail" element={<VoteDetail />} />
         <Route path="/news" element={<News />} />

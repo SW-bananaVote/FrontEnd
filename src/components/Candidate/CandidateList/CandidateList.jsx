@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CandidateListContainer,
   CandidateCard,
@@ -17,6 +18,8 @@ import {
 import minjuImg from "../../../assets/Candidate/PartyImg/더불어민주당.svg";
 import gukhimImg from "../../../assets/Candidate/PartyImg/국민의힘.svg";
 import noksakImg from "../../../assets/Candidate/PartyImg/녹색정의당.svg";
+import saeroImg from "../../../assets/Candidate/PartyImg/새로운미래.png";
+import gaehyukImg from "../../../assets/Candidate/PartyImg/개혁신당.png";
 import defaultImg from "../../../assets/Candidate/PartyImg/무소속.svg";
 import traingleImg from "../../../assets/Candidate/triangle.svg";
 
@@ -36,10 +39,12 @@ const CandidateList = () => {
   const partyRef = useRef(null);
   const wiwNameRef = useRef(null);
   const loaderRef = useRef(null); // Intersection Observer 트리거
+  const navigate = useNavigate();
 
   useEffect(() => {
     // API 호출
-    fetch("http://43.203.35.140:8080/candidate")
+    const REACT_APP_BASE = process.env.REACT_APP_BASE;
+    fetch(`${REACT_APP_BASE}/candidate/all`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -224,6 +229,10 @@ const CandidateList = () => {
                     ? gukhimImg
                     : candidate.jdName === "녹색정의당"
                     ? noksakImg
+                    : candidate.jdName === "새로운미래"
+                    ? saeroImg
+                    : candidate.jdName === "개혁신당"
+                    ? gaehyukImg
                     : defaultImg
                 })`,
               }}
@@ -231,7 +240,11 @@ const CandidateList = () => {
             <PartyText>{candidate.jdName}</PartyText>
             <PartyText>{candidate.wiwName}</PartyText>
             <NameText>{candidate.name}</NameText>
-            <ViewButton>보러가기</ViewButton>
+            <ViewButton
+              onClick={() => navigate(`/candidate/detail/${candidate.id}`)} // 상세 페이지로 이동
+            >
+              보러가기
+            </ViewButton>
           </CandidateCard>
         ))}
       </CandidateListContainer>
