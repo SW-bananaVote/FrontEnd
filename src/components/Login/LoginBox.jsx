@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import bcrypt from 'bcryptjs';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -24,9 +25,11 @@ const LoginComponent = () => {
 
     try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
+      const hashedPassword = await bcrypt.hash(password, 10);
+
       const response = await axios.post(`${REACT_APP_BASE}/user/login`, {
-        id: id,
-        password: password,
+        userId: id,
+        password: hashedPassword,
       });
 
       console.log('로그인 성공:', response.data);

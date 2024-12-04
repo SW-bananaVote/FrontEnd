@@ -8,7 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   padding: 10px 0 40px 0;
   font-family: Arial, sans-serif;
-`;
+`
 
 export const Title = styled.a`
   font-size: 40px;
@@ -17,7 +17,7 @@ export const Title = styled.a`
   cursor: pointer;
   text-decoration: none;  /* 밑줄 제거 */
   color: black;
-`;
+`
 
 
 export const SignUpInput = styled.div`
@@ -29,7 +29,7 @@ export const SignUpInput = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`
 
 export const InputField = styled.div`
   width: 100%;
@@ -38,18 +38,18 @@ export const InputField = styled.div`
   flex-direction: column;
   gap: 15px;
   margin-bottom: 30px;
-`;
+`
 
 export const Label = styled.label`
   font-size: 14px;
   color: #777;
   margin-bottom: 5px;
-`;
+`
 
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 
 export const Input = styled.input`
   padding: 15px;
@@ -58,14 +58,14 @@ export const Input = styled.input`
   border-radius: 10px;
   background-color: #f0f2fa;
   color: #333;
-`;
+`
 
 // 키워드 선택 설명 텍스트 스타일
 export const KeywordText = styled.div`
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 20px;
-`;
+`
 
 // 키워드 버튼 컨테이너
 export const KeywordsContainer = styled.div`
@@ -74,7 +74,7 @@ export const KeywordsContainer = styled.div`
   gap: 10px;
   justify-content: center;
   margin-bottom: 30px;
-`;
+`
 
 export const KeywordButton = styled.button`
   padding: 10px 20px;
@@ -88,13 +88,13 @@ export const KeywordButton = styled.button`
     background-color: #a2b6f9;
     color: white;
   }
-`;
+`
 
 // 확인 및 취소 버튼 컨테이너
 export const ActionButtonsContainer = styled.div`
   display: flex;
   gap: 10px;
-`;
+`
 
 export const ConfirmButton = styled.button`
   padding: 15px 30px;
@@ -107,7 +107,7 @@ export const ConfirmButton = styled.button`
   &:hover {
     background-color: #4974f5;
   }
-`;
+`
 
 export const CancelButton = styled.button`
   padding: 15px 30px;
@@ -120,4 +120,29 @@ export const CancelButton = styled.button`
   &:hover {
     background-color: #a1a1a1;
   }
-`;
+`
+
+export const RowContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const CheckButton = styled.button`
+  background-color: #6A8EF3;
+  border: 2px solid black;
+  border-radius: 10%;
+  height: 30px;
+  margin-left: 10px;
+  color: black;
+  cursor: pointer;
+`
+
+export const CheckBox = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const CheckP = styled.p`
+  font-size: 13px;
+`

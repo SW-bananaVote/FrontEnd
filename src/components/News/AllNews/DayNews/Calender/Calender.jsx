@@ -10,7 +10,7 @@ export const CalenderBox = styled.div`
 
 const Calender = ({ selectedDate, onDateChange }) => {
   const maxDate = new Date(); // 날짜 선택을 오늘까지로 제한
-  const nDate = 30; // 오늘부터 30일 이전까지만 조회
+  const nDate = 14; // 오늘부터 14일 이전까지만 조회
   const minDate = new Date(); // 이전 날짜 제한
   minDate.setDate(maxDate.getDate() - nDate); // 오늘로부터 n일전까지로 제한
 

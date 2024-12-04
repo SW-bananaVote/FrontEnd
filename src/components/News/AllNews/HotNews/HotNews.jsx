@@ -14,8 +14,10 @@ const HotNews = () => {
     const fetchStaticData = async () => {
       try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
-        // `${REACT_APP_BASE}/news/headline`
-        const response = await fetch("서버 URL");
+        // const url = `${REACT_APP_BASE}/news/headline`;
+        const url = "가짜주소";
+        
+        const response = await fetch(url);
         const staticData = await response.json();
         setData(staticData);
       } catch (error) {

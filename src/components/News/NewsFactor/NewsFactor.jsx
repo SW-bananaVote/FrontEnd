@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-const FactorLink = styled(Link)`
+const FactorAnchor = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,7 +25,7 @@ const FactorTitle = styled.p`
 
 const NewsFactor = ({ item }) => {
   return (
-    <FactorLink to={item.url}>
+    <FactorAnchor href={item.url} target="_blank" rel="noopener noreferrer">
       <FactorImg
         src={item.imgUrl}
         alt="다음 뉴스 이미지"
@@ -34,16 +33,8 @@ const NewsFactor = ({ item }) => {
       <FactorTitle>
         {item.title}
       </FactorTitle>
-    </FactorLink>
+    </FactorAnchor>
   );
 }
-
-// NewsFactor.defaultProps = {
-//   item: {
-//     newsUrl: "https://v.daum.net/v/0sb2eXDxzJ",
-//     imgUrl: "https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202411/16/yonhap/20241116135827186ekot.jpg",
-//     newsTitle: "프랑스 프로축구 명문 리옹, '빚더미'에 2부 강등 위기"
-//   }
-// }
 
 export default NewsFactor;

@@ -12,7 +12,9 @@ const DayNews = () => {
       const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
       // `${REACT_APP_BASE}/news/date/${formattedDate}`
-      const response = await fetch("서버 URL");
+      const url = `${REACT_APP_BASE}/news/date/${formattedDate}`;
+
+      const response = await fetch(url);
       console.log(formattedDate);
       const staticData = await response.json();
       setData(staticData);

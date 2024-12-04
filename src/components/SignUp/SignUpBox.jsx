@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import bcrypt from 'bcryptjs';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,35 +15,12 @@ import {
   KeywordButton,
   ActionButtonsContainer,
   ConfirmButton,
-  CancelButton
+  CancelButton,
+  RowContainer,
+  CheckButton,
+  CheckBox,
+  CheckP
 } from "./SignUpBoxStyle";
-
-import styled from 'styled-components';
-export const RowContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-export const CheckButton = styled.button`
-  background-color: #6A8EF3;
-  border: 2px solid black;
-  border-radius: 10%;
-  height: 30px;
-  margin-left: 10px;
-  color: black;
-  cursor: pointer;
-`
-
-export const CheckBox = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-export const CheckP = styled.p`
-  font-size: 13px;
-`
-
 
 const SignUpBox = () => {
   const [IDCheck, setIDCheck] = useState("*");
@@ -116,13 +94,21 @@ const SignUpBox = () => {
       //   "password": "dbstn123",
       //   "keywords": ["교육", "교통", "교육"]
       // }
-      const response = await axios.post(`${REACT_APP_BASE}/user/register`, {
+      const hashedPassword = await bcrypt.hash(form.password, 10);
+
+      const requestData = {
+        userId: form.id,
+        hashedPassword: hashedPassword,
         nickname: form.nickname,
         email: form.email,
-        id: form.id,
-        password: form.password,
-        keywords: selectedKeywords,
-      });
+        interests: selectedKeywords.map((keyword) => ({
+          userId: form.id,
+          keyword: keyword,
+        })),
+      };
+
+      const response = await axios.post(`${REACT_APP_BASE}/user/register`, requestData);
+
       console.log('회원가입 성공:', response.data);
       navigate('/');
       // 로그인 성공 후 추가 로직 (예: 토큰 저장, 리다이렉션 등)

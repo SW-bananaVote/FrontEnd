@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import bcrypt from 'bcryptjs';
 import axios from "axios";
 import { FindContainer, FindForm, FindInput, FindButton } from "./FindStyle";
 
@@ -10,6 +11,7 @@ const FindPS = () => {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [isVerified, setIsVerified] = useState(false); // ID와 이메일이 확인되었는지 상태
+  const [isPasswordChanged, setIsPasswordChanged] = useState(false); // 비밀번호 변경 상태 추가
 
   const handleVerify = async (e) => {
     e.preventDefault();
@@ -21,25 +23,36 @@ const FindPS = () => {
 
     try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
-      const response = await axios.post(`${REACT_APP_BASE}/user/verify`, {
-        id,
-        email,
-      });
 
-      setMessage(response.data.message || "사용자 확인이 완료되었습니다.");
-      setIsVerified(true); // 확인 성공
-      setError(null);
+      const response = await axios.post(`${REACT_APP_BASE}/user/isUser`, null, {
+        params: {
+          userId: id,
+          email: email,
+        }
+      })
+
+      console.log(response);
+
+      if (response.data === true) {
+        setMessage(response.data.message || "사용자 확인이 완료되었습니다.");
+        setIsVerified(true); // 확인 성공
+        setError(null);
+      } else {
+        throw new Error("else 사용자 확인에 실패했습니다.");
+      }
+
     } catch (err) {
       setMessage(null);
-      setError(err.response?.data?.message || "사용자 확인에 실패했습니다.");
+      setError(err.response?.data?.message || "catch 사용자 확인에 실패했습니다.");
     }
   };
 
-  const handleSubmit = async (e) => {
+  // 비밀번호 변경
+  const handleResetPassword = async (e) => {
     e.preventDefault();
 
     if (!isVerified) {
-      alert("먼저 아이디와 이메일을 확인해주세요.");
+      alert("먼저 사용자 확인을 완료해주세요.");
       return;
     }
 
@@ -55,14 +68,26 @@ const FindPS = () => {
 
     try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
-      const response = await axios.post(`${REACT_APP_BASE}/user/reset-password`, {
-        id,
-        email,
-        password,
-      });
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      const response = await axios.put(
+        `${REACT_APP_BASE}/user/resetPassword`,
+        null, // 요청 본문 없음
+        {
+          params: {
+            userId: id,
+            newPassword: hashedPassword,
+          },
+        }
+      );
 
-      setMessage(response.data.message || "비밀번호가 성공적으로 변경되었습니다.");
-      setError(null);
+      if (response.data == "Password updated") {
+        setMessage(null);
+        setError(null);
+        setIsPasswordChanged(true); // 비밀번호 변경 상태 업데이트
+      } else {
+        throw new Error("비밀번호 변경에 실패했습니다.");
+      }
     } catch (err) {
       setMessage(null);
       setError(err.response?.data?.message || "비밀번호 변경에 실패했습니다.");
@@ -96,17 +121,9 @@ const FindPS = () => {
           />
 
           <FindButton type="submit">사용자 확인</FindButton>
-          {/* 테스트용 버튼 */}
-          <button
-            type="button"
-            onClick={() => setIsVerified(true)}
-            style={{ marginTop: "10px", backgroundColor: "gray", color: "white" }}
-          >
-            테스트용: 인증 완료 상태로 전환
-          </button>
         </FindForm>
-      ) : (
-        <FindForm onSubmit={handleSubmit}>
+      ) : !isPasswordChanged ? (
+        <FindForm onSubmit={handleResetPassword}>
           <label htmlFor="password">새 비밀번호</label>
           <FindInput
             type="password"
@@ -129,6 +146,10 @@ const FindPS = () => {
 
           <FindButton type="submit">비밀번호 변경</FindButton>
         </FindForm>
+      ) : (
+        <p style={{ color: "green", fontSize: "18px" }}>
+          비밀번호가 성공적으로 변경되었습니다.
+        </p>
       )}
 
       {/* 결과 메시지 표시 */}
