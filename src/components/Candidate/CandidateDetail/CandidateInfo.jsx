@@ -23,6 +23,7 @@ const CandidateInfo = () => {
   const { id } = useParams(); // URL에서 후보 ID를 가져옴
   const [candidate, setCandidate] = useState(null); // 후보 데이터
   const [sdName, setSdName] = useState(""); // 추가로 가져올 sdName 데이터
+  const [message, setMessage] = useState(""); // ChatGPT API에서 가져온 메시지
   const navigate = useNavigate(); // 목록으로 돌아가기 위해 사용
 
   useEffect(() => {
@@ -57,6 +58,31 @@ const CandidateInfo = () => {
               console.error("Error fetching district data:", error)
             );
         }
+
+        // ChatGPT API로 공약 메시지 가져오기
+        fetch(`/api/chat`, {
+          //일단 임시로 꺼둠
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: `This GPT provides the campaign promises of candidates running in the 22nd general election in South Korea. Users input a candidate's name, political party, and constituency, and the GPT searches for the information from reliable web sources. The response only lists campaign promises as a numbered array, e.g., ["1. Promise", "2. Promise"]. No additional information or explanations are provided. If no promises are found, the response will state: "No campaign promises found." The GPT will never fabricate data and ensures all information is accurate. ${data.name}`,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch message from ChatGPT API");
+            }
+            return response.json();
+          })
+          .then((chatResponse) => {
+            console.log("ChatGPT response:", chatResponse);
+            setMessage(chatResponse.message); // ChatGPT API의 응답 메시지 저장
+          })
+          .catch((error) =>
+            console.error("Error fetching message from ChatGPT API:", error)
+          );
       })
       .catch((error) => console.error("Error fetching candidate data:", error));
   }, [id]);
@@ -101,10 +127,11 @@ const CandidateInfo = () => {
           </DetailContainer>
         </SecondBox>
         <SecondBox>
-          <CategoryText>약력</CategoryText>
+          <CategoryText>공약</CategoryText>
           <DetailContainer>
-            <ProfileSubTitle>{candidate.career1}</ProfileSubTitle>
-            <ProfileSubTitle>{candidate.career2}</ProfileSubTitle>
+            <ProfileSubTitle>
+              {message || "ChatGPT가 탐색하는 중..."}
+            </ProfileSubTitle>
           </DetailContainer>
         </SecondBox>
       </SecondContainer>
