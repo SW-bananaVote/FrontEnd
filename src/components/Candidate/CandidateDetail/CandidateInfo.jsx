@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Modal from "react-modal"; // react-modal 임포트
 import {
   ProfileContainer,
   ProfileImage,
@@ -9,7 +10,6 @@ import {
   DetailContainer,
   SecondBox,
   CategoryText,
-  PromiseContainer,
   GptButton,
 } from "./CandidateInfoStyle";
 import { useParams, useNavigate } from "react-router-dom";
@@ -21,11 +21,21 @@ import saeroImg from "../../../assets/Candidate/PartyImg/새로운미래.png";
 import gaehyukImg from "../../../assets/Candidate/PartyImg/개혁신당.png";
 import defaultImg from "../../../assets/Candidate/PartyImg/무소속.svg";
 
+import GptPending from "../../../assets/Pending/GPTpending.gif";
+
+Modal.setAppElement("#root");
+
 const CandidateInfo = () => {
   const { id } = useParams(); // URL에서 후보 ID를 가져옴
   const [candidate, setCandidate] = useState(null); // 후보 데이터
   const [sdName, setSdName] = useState(""); // 추가로 가져올 sdName 데이터
   const [promises, setPromises] = useState([]); // 공약 데이터
+  const [isModalOpen, setIsModalOpen] = useState(false); // 공약 목록 모달 상태
+  const [isExplanationModalOpen, setIsExplanationModalOpen] = useState(false); // 공약 설명 모달 상태
+  const [selectedPromise, setSelectedPromise] = useState(""); // 클릭된 공약
+  const [explanation, setExplanation] = useState(""); // AI로부터 받은 설명
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태
+
   const navigate = useNavigate(); // 목록으로 돌아가기 위해 사용
   const REACT_APP_BASE = process.env.REACT_APP_BASE;
 
@@ -87,6 +97,50 @@ const CandidateInfo = () => {
     fetchPromises();
   }, [id]);
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const openExplanationModal = async (promise) => {
+    setSelectedPromise(promise);
+    setIsExplanationModalOpen(true);
+    setIsLoading(true);
+    try {
+      const response = await fetch(`${REACT_APP_BASE}/api/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `${candidate.name} 후보자의 ${promise} 공약에 대해 설명해줘. 3줄을 넘지 않아야하고, 아직 사회 경험이 없는 청소년 수준에서 알아들을 수 있도록 설명해줘 하지만 격식을 가지고 답변해줘`,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch explanation from AI");
+      }
+
+      const data = await response.json();
+      setExplanation(data.choices[0].message.content); // content 값을 설정
+    } catch (error) {
+      console.error("Error fetching explanation:", error);
+      setExplanation("AI 설명을 가져오지 못했습니다.");
+    } finally {
+      setIsLoading(false); // 로딩 상태 종료
+    }
+  };
+
+  const closeExplanationModal = () => {
+    setIsExplanationModalOpen(false);
+    setSelectedPromise("");
+    setExplanation("");
+    setIsLoading(false);
+  };
+
   if (!candidate) {
     return <p>Loading...</p>; // 데이터 로딩 중 표시
   }
@@ -131,15 +185,126 @@ const CandidateInfo = () => {
           <DetailContainer>
             {promises.length > 0 ? (
               promises.map((promise, index) => (
-                <ProfileSubTitle key={index}>{promise}</ProfileSubTitle>
+                <ProfileSubTitle
+                  key={index}
+                  onClick={() => openExplanationModal(promise)}
+                  style={{ cursor: "pointer", color: "blue" }}
+                >
+                  {promise}
+                </ProfileSubTitle>
               ))
             ) : (
               <ProfileSubTitle>공약 데이터가 없습니다</ProfileSubTitle>
             )}
           </DetailContainer>
-          <GptButton>AI 공약 설명</GptButton>
+          <GptButton onClick={openModal}>AI 공약 설명</GptButton>
         </SecondBox>
       </SecondContainer>
+
+      {/* 공약 목록 모달 */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="AI 공약 설명"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.75)",
+          },
+          content: {
+            margin: "auto",
+            width: "50%",
+            height: "50%",
+            padding: "20px",
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      >
+        <h1>용어가 어려운 공약을 AI에게 물어보세요</h1>
+        <h3>공약을 클릭하면 AI가 해당 공약에 대해 해설해줍니다!</h3>
+        <button
+          onClick={closeModal}
+          style={{ marginTop: "20px", padding: "10px 10px", cursor: "pointer" }}
+        >
+          닫기
+        </button>
+      </Modal>
+
+      {/* 공약 설명 모달 */}
+      <Modal
+        isOpen={isExplanationModalOpen}
+        onRequestClose={closeExplanationModal}
+        contentLabel="공약 해설"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.75)",
+          },
+          content: {
+            margin: "auto",
+            width: "60%",
+            height: "60%",
+            padding: "20px",
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      >
+        <h2 style={{ marginBottom: "20px" }}>{selectedPromise}</h2>
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center", // 텍스트도 가운데 정렬
+            }}
+          >
+            <img
+              src={GptPending}
+              alt="Loading..."
+              style={{
+                width: "100px",
+                height: "100px",
+                marginBottom: "20px",
+                marginTop: "20px",
+              }}
+            />
+            <p>AI가 답변을 가져오고 있어요</p>
+          </div>
+        ) : (
+          <div
+            style={{
+              width: "70%", // 중앙에 70% 폭만 차지
+              textAlign: "center", // 텍스트 가운데 정렬
+            }}
+          >
+            <p
+              style={{
+                margin: "20px",
+              }}
+            >
+              {explanation}
+            </p>
+          </div>
+        )}
+        <button
+          onClick={closeExplanationModal}
+          style={{
+            marginTop: "20px",
+            padding: "10px 20px",
+            cursor: "pointer",
+          }}
+        >
+          닫기
+        </button>
+      </Modal>
     </div>
   );
 };
