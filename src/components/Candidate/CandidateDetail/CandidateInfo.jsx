@@ -12,6 +12,16 @@ import {
   CategoryText,
   GptButton,
 } from "./CandidateInfoStyle";
+import {
+  ModalOverlay, // 공통 오버레이 스타일
+  ModalContent, // 공통 모달 컨텐츠 스타일
+  ModalTitle, // 첫 번째 Modal 타이틀
+  ModalSubtitle, // 첫 번째 Modal 부제목
+  ModalButton, // 공통 버튼 스타일
+  ModalLoadingContainer, // 두 번째 Modal 로딩 컨테이너
+  ModalExplanationContainer, // 두 번째 Modal 설명 컨테이너
+  ModalParagraph, // 두 번째 Modal 텍스트 스타일
+} from "./ModalStyle";
 import { useParams, useNavigate } from "react-router-dom";
 
 import minjuImg from "../../../assets/Candidate/PartyImg/더불어민주당.svg";
@@ -201,47 +211,12 @@ const CandidateInfo = () => {
         </SecondBox>
       </SecondContainer>
 
-      {/* 공약 목록 모달 */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="AI 공약 설명"
         style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
-          },
-          content: {
-            margin: "auto",
-            width: "50%",
-            height: "50%",
-            padding: "20px",
-            borderRadius: "10px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          },
-        }}
-      >
-        <h1>용어가 어려운 공약을 AI에게 물어보세요</h1>
-        <h3>공약을 클릭하면 AI가 해당 공약에 대해 해설해줍니다!</h3>
-        <button
-          onClick={closeModal}
-          style={{ marginTop: "20px", padding: "10px 10px", cursor: "pointer" }}
-        >
-          닫기
-        </button>
-      </Modal>
-
-      {/* 공약 설명 모달 */}
-      <Modal
-        isOpen={isExplanationModalOpen}
-        onRequestClose={closeExplanationModal}
-        contentLabel="공약 해설"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
-          },
+          overlay: ModalOverlay,
           content: {
             margin: "auto",
             width: "60%",
@@ -255,55 +230,54 @@ const CandidateInfo = () => {
           },
         }}
       >
-        <h2 style={{ marginBottom: "20px" }}>{selectedPromise}</h2>
-        {isLoading ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center", // 텍스트도 가운데 정렬
-            }}
-          >
-            <img
-              src={GptPending}
-              alt="Loading..."
-              style={{
-                width: "100px",
-                height: "100px",
-                marginBottom: "20px",
-                marginTop: "20px",
-              }}
-            />
-            <p>AI가 답변을 가져오고 있어요</p>
-          </div>
-        ) : (
-          <div
-            style={{
-              width: "70%", // 중앙에 70% 폭만 차지
-              textAlign: "center", // 텍스트 가운데 정렬
-            }}
-          >
-            <p
-              style={{
-                margin: "20px",
-              }}
-            >
-              {explanation}
-            </p>
-          </div>
-        )}
-        <button
-          onClick={closeExplanationModal}
-          style={{
-            marginTop: "20px",
-            padding: "10px 20px",
-            cursor: "pointer",
-          }}
-        >
-          닫기
-        </button>
+        <ModalContent>
+          <ModalTitle>용어가 어려운 공약을 AI에게 물어보세요</ModalTitle>
+          <ModalSubtitle>공약을 클릭하면 AI가 해설해줍니다!</ModalSubtitle>
+          <ModalButton onClick={closeModal}>닫기</ModalButton>
+        </ModalContent>
+      </Modal>
+      <Modal
+        isOpen={isExplanationModalOpen}
+        onRequestClose={closeExplanationModal}
+        contentLabel="공약 해설"
+        style={{
+          overlay: ModalOverlay,
+          content: {
+            margin: "auto",
+            width: "60%",
+            height: "60%",
+            padding: "20px",
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      >
+        <ModalContent>
+          <ModalTitle>{selectedPromise}</ModalTitle>
+          {isLoading ? (
+            <ModalLoadingContainer>
+              <img
+                src={GptPending}
+                alt="Loading..."
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  marginBottom: "20px",
+                  marginTop: "20px",
+                }}
+              />
+              <ModalParagraph>AI가 답변을 가져오고 있어요</ModalParagraph>
+            </ModalLoadingContainer>
+          ) : (
+            <ModalExplanationContainer>
+              <ModalParagraph>{explanation}</ModalParagraph>
+            </ModalExplanationContainer>
+          )}
+          <ModalButton onClick={closeExplanationModal}>닫기</ModalButton>
+        </ModalContent>
       </Modal>
     </div>
   );
