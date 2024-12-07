@@ -87,3 +87,25 @@ export const DetailContainer = styled.div`
   margin-left: 30px;
   padding: 20px;
 `;
+
+export const PromiseContainer = styled.div`
+  display: flex;
+`;
+
+export const GptButton = styled.button`
+  border-radius: 20px;
+  width: 150px;
+  height: 50px;
+  position: absolute;
+  margin-left: 760px;
+  margin-top: 40px;
+  background-color: #6a8ef3;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+
+  &: hover {
+    background-color: #5c7ce6;
+  }
+`;
