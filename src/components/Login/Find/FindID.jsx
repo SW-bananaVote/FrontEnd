@@ -24,10 +24,9 @@ const FindID = () => {
     try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
       const url = `${REACT_APP_BASE}/user/findId`;
-
-      const response = await axios.get(url, {
-        params: { email: email },
-      })
+      const response = await axios.post(url, {
+        email: email,
+      });
 
       // 성공적으로 아이디를 찾았을 때
       setFoundID(response.data); // 서버에서 반환된 아이디

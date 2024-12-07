@@ -94,11 +94,10 @@ const SignUpBox = () => {
       //   "password": "dbstn123",
       //   "keywords": ["교육", "교통", "교육"]
       // }
-      const hashedPassword = await bcrypt.hash(form.password, 10);
 
       const requestData = {
         userId: form.id,
-        hashedPassword: hashedPassword,
+        hashedPassword: form.password,
         nickname: form.nickname,
         email: form.email,
         interests: selectedKeywords.map((keyword) => ({
@@ -137,9 +136,13 @@ const SignUpBox = () => {
 
     try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
-      const response = await fetch(`${REACT_APP_BASE}/user/${form.id}`);
+      const url = `${REACT_APP_BASE}/user/checkId`;
+      const response = await axios.post(url, {
+        userId: form.id,
+      });
+      console.log(response.data);
 
-      if (response.ok) {
+      if (response.data == false) {
         alert("사용 가능");
         setIDCheck("사용 가능");
         console.log(response);

@@ -23,13 +23,11 @@ const FindPS = () => {
 
     try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
-
-      const response = await axios.post(`${REACT_APP_BASE}/user/isUser`, null, {
-        params: {
-          userId: id,
-          email: email,
-        }
-      })
+      const url = `${REACT_APP_BASE}/user/isUser`;
+      const response = await axios.post(url, {
+        userId: id,
+        email: email,
+      });
 
       console.log(response);
 
@@ -68,18 +66,11 @@ const FindPS = () => {
 
     try {
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
-      const hashedPassword = await bcrypt.hash(password, 10);
-      
-      const response = await axios.put(
-        `${REACT_APP_BASE}/user/resetPassword`,
-        null, // 요청 본문 없음
-        {
-          params: {
-            userId: id,
-            newPassword: hashedPassword,
-          },
-        }
-      );
+      const url = `${REACT_APP_BASE}/user/resetPassword`;
+      const response = await axios.put(url, {
+        userId: id,
+        newPassword: password,
+      });
 
       if (response.data == "Password updated") {
         setMessage(null);

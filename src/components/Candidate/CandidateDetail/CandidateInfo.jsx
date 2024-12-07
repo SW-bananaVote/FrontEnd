@@ -15,7 +15,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import minjuImg from "../../../assets/Candidate/PartyImg/더불어민주당.svg";
 import gukhimImg from "../../../assets/Candidate/PartyImg/국민의힘.svg";
 import noksakImg from "../../../assets/Candidate/PartyImg/녹색정의당.svg";
-import saeroImg from "../../../assets/Candidate/PartyImg/새로운미래.png";
+import saeroImg from "../../../assets/Candidate/PartyImg/새로운미래.png"; 
 import gaehyukImg from "../../../assets/Candidate/PartyImg/개혁신당.png";
 import defaultImg from "../../../assets/Candidate/PartyImg/무소속.svg";
 

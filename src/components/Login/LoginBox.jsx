@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import bcrypt from 'bcryptjs';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -22,23 +21,38 @@ const LoginComponent = () => {
       alert("아이디와 비밀번호를 모두 입력해주세요.");
       return;
     }
+    const REACT_APP_BASE = process.env.REACT_APP_BASE;
+    const url = `${REACT_APP_BASE}/user/login`;
+
 
     try {
-      const REACT_APP_BASE = process.env.REACT_APP_BASE;
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const response = await axios.post(`${REACT_APP_BASE}/user/login`, {
+      // 수정된 부분: 전송 데이터 확인을 위해 console.log 추가
+      console.log('전송 데이터:', {
         userId: id,
-        password: hashedPassword,
+        password: password,
+      });
+
+      const response = await axios.post(url, {
+        userId: id,
+        password: password,
+      }, {
+        headers: {
+          // 수정된 부분: Content-Type 명시적으로 추가
+          'Content-Type': 'application/json',
+        },
       });
 
       console.log('로그인 성공:', response.data);
-      const { token } = response.data;
+      console.log(response);
+      const token = response.data;
       localStorage.setItem("accessToken", token); // 또는 쿠키에 저장
       navigate('/');
-
     } catch (error) {
-      console.error('로그인 실패:', error);
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("네트워크 또는 기타 오류:", error.message);
+      }
       alert("로그인 실패. 아이디 혹은 패스워드를 확인해주세요.");
       setId('');
       setPassword('');
