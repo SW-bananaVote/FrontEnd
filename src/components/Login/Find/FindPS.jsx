@@ -36,12 +36,14 @@ const FindPS = () => {
         setIsVerified(true); // 확인 성공
         setError(null);
       } else {
-        throw new Error("else 사용자 확인에 실패했습니다.");
+        console.log("else error");
+        throw new Error("사용자 확인에 실패했습니다.");
       }
 
     } catch (err) {
+      console.log("catch error");
       setMessage(null);
-      setError(err.response?.data?.message || "catch 사용자 확인에 실패했습니다.");
+      setError(err.response?.data?.message || "사용자 확인에 실패했습니다.");
     }
   };
 

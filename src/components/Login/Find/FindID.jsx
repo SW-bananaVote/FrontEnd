@@ -35,14 +35,20 @@ const FindID = () => {
     } catch (err) {
       // 실패했을 때 에러 메시지 설정
       setFoundID(null);
-      setError(err.response?.data?.message || "아이디 찾기에 실패했습니다.");
+      setError("아이디 찾기에 실패했습니다.");
+      setIsIDFound(false); // 아이디 찾기 성공 상태 업데이트
     }
   };
 
   return (
     <FindContainer>
       <h1>아이디 찾기</h1>
-      {!isIDFound ? (
+      {foundID || error ? (
+        <div>
+          {foundID && <p>회원님의 아이디는 <strong>{foundID}</strong>입니다.</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </div>
+      ) : (
         <FindForm onSubmit={handleSubmit}>
           <label htmlFor="email">등록된 이메일</label>
           <FindInput
@@ -55,13 +61,7 @@ const FindID = () => {
           />
           <FindButton type="submit">아이디 찾기</FindButton>
         </FindForm>
-      ) : (
-        <div>
-          {foundID && <p>회원님의 아이디는 <strong>{foundID}</strong>입니다.</p>}
-          {error && <p style={{ color: "red" }}>{error}</p>}
-        </div>
       )}
-
     </FindContainer>
   );
 };
