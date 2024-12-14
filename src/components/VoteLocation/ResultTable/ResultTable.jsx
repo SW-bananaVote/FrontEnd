@@ -43,7 +43,7 @@ const ResultTable = ({ data }) => {
   }, [data]);
 
   if (!tableData || tableData.length === 0) {
-    return <p style={{ textAlign: "center", color: "#555" }}>표시할 데이터가 없습니다.</p>;
+    return <p style={{ fontSize: "1.5em", marginTop: "30px", textAlign: "center" }}>여기 투표소 위치 정보를 표시해드릴게요!</p>;
   }
 
   return (

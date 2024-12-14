@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import React, { useEffect, useRef, useState } from 'react';
 import RegionSelector from "./RegionSelector/RegionSelector";
 import ResultTable from "./ResultTable/ResultTable";
@@ -18,8 +18,26 @@ export const KakaoMap = styled.div`
   border-radius: 3%;
 `;
 
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+// 스피너 스타일 정의
+const Spinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #09f;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: ${spin} 1s linear infinite;
+`;
+
+
 const VoteLocationBox = () => {
   const mapContainer = useRef(null);
+  const [loading, setLoading] = useState(false); // 로딩 상태 관리
 
   // 지역 상태 관리
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -68,6 +86,8 @@ const VoteLocationBox = () => {
   // 통신 처리 함수
   const fetchData = async (location, limit) => {
     console.log("데이터 패칭 시작");
+    setLoading(true); // 로딩 시작
+
     try {
       // URL에 PathVariable 추가
       const REACT_APP_BASE = process.env.REACT_APP_BASE;
@@ -127,9 +147,10 @@ const VoteLocationBox = () => {
       );
 
       console.log("Parsed Data:", limitedData);
-
+      setLoading(false); // 로딩 종료
       return limitedData;
     } catch (error) {
+      setLoading(false); // 로딩 종료
       console.error("통신 오류:", error.message);
       return null;
     }
@@ -180,7 +201,7 @@ const VoteLocationBox = () => {
     });
 
     setMarkers(newMarkers);
-    setMarkerData(markerEntries);
+    setMarkerData(markerEntries); // 테이블 데이터 업데이트
   };
 
   const handleSearch = async () => {
@@ -189,22 +210,28 @@ const VoteLocationBox = () => {
       return;
     }
 
+    setLoading(true); // 로딩 시작
+
     // 서버에서 데이터 가져오기
     const data = await fetchData(selectedValue);
 
     if (data) {
-      updateMapMarkers(data);
+      updateMapMarkers(data); // 마커 업데이트 및 테이블 데이터 설정
+      setLoading(false); // 지도와 테이블이 모두 업데이트된 후 로딩 종료
     } else {
       // 서버 통신 실패 시 더미 데이터로 표시
       const dummyResponse = await fetch("/DummyData/VoteLocation/VoteLocation.json");
       if (dummyResponse.ok) {
         const dummyData = await dummyResponse.json();
         updateMapMarkers(dummyData);
+        setLoading(false); // 더미 데이터 업데이트 후 로딩 종료
       } else {
         alert("더미 데이터를 표시할 수 없습니다.");
+        setLoading(false); // 더미 데이터마저 실패했을 경우에도 로딩 종료
       }
     }
   };
+
 
 
   const handleReset = () => {
@@ -236,8 +263,14 @@ const VoteLocationBox = () => {
         onSearch={handleSearch}
         onReset={handleReset} />
       <KakaoMap ref={mapContainer} />
-      {/* ResultTable에 markerData 전달 */}
-      <ResultTable data={markerData} />
+      {loading ? (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "1em" }}>
+          <p>로딩 중입니다... 잠시만 기다려주세요!</p>
+          <Spinner /> {/* styled-components로 만든 스피너 */}
+        </div>
+      ) : (
+        <ResultTable data={markerData} />
+      )}
     </VoteLocationContainer>
   );
 };
