@@ -28,7 +28,7 @@ const VoteInfoBox = () => {
   
     const filtered = data.filter((item) => {
       // 각 필드가 undefined일 경우 빈 문자열로 처리
-      const title = item.word ? item.word.toLowerCase() : ""; // word 필드를 사용
+      const title = item.title ? item.title.toLowerCase() : ""; // word 필드를 사용
       const content = item.content ? item.content.toLowerCase() : ""; // content 필드는 그대로 사용
   
       // searchType에 따라 검색 대상 필드 결정
