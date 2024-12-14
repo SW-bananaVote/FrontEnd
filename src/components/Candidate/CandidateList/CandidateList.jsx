@@ -14,6 +14,8 @@ import {
   DropdownSection,
   SearchText,
   SearchBar,
+  AdditionalText,
+  SearchTextContainer,
 } from "./CandidateListStyle";
 import minjuImg from "../../../assets/Candidate/PartyImg/더불어민주당.svg";
 import gukhimImg from "../../../assets/Candidate/PartyImg/국민의힘.svg";
@@ -213,13 +215,21 @@ const CandidateList = () => {
           onChange={handleNameFilterChange} // 입력값 변경 시 상태 업데이트
         />
       </DropdownSection>
-      <SearchText>
-        {wiwName} {party} 후보자를 확인해보세요
-      </SearchText>
+      <SearchTextContainer>
+        <SearchText>
+          {wiwName} {party} 후보자를 확인해보세요
+        </SearchText>
+        <AdditionalText>
+          *우측 상단이 녹색으로 표시된 후보자는 공약 데이터가 제공됩니다
+        </AdditionalText>
+      </SearchTextContainer>
 
       <CandidateListContainer>
         {visibleCandidates.map((candidate, index) => (
-          <CandidateCard key={index}>
+          <CandidateCard
+            key={index}
+            showGreenDot={candidate.id >= 1 && candidate.id <= 50}
+          >
             <ProfileImage
               style={{
                 backgroundImage: `url(${

@@ -13,6 +13,7 @@ export const CandidateListContainer = styled.div`
 `;
 
 export const CandidateCard = styled.div`
+  position: relative; /* 초록색 점을 배치하기 위해 필요 */
   width: 220px;
   padding: 16px;
   margin-top: 20px;
@@ -20,6 +21,19 @@ export const CandidateCard = styled.div`
   border-radius: 8px;
   text-align: center;
   justify-items: center;
+
+  /* 초록색 점 추가 */
+  &::after {
+    content: "";
+    display: ${({ showGreenDot }) => (showGreenDot ? "block" : "none")};
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 15px;
+    height: 15px;
+    background-color: rgba(0, 255, 4, 0.84);
+    border-radius: 50%;
+  }
 `;
 
 export const ProfileImage = styled.div`
@@ -146,12 +160,22 @@ export const DropdownSection = styled.div`
   margin-top: 60px;
 `;
 
+export const SearchTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const SearchText = styled.div`
   font-size: 44px;
   color: #000;
   font-weight: bold;
-  margin-bottom: 20px;
   margin-left: 320px;
+`;
+
+export const AdditionalText = styled.h3`
+  font-size: 20px;
+  color: rgba(25, 223, 28, 0.84);
+  margin-left: 54.5%;
 `;
 
 export const SearchBar = styled.input`

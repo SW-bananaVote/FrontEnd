@@ -45,11 +45,16 @@ const CandidateInfo = () => {
   const [selectedPromise, setSelectedPromise] = useState(""); // 클릭된 공약
   const [explanation, setExplanation] = useState(""); // AI로부터 받은 설명
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate(); // 목록으로 돌아가기 위해 사용
   const REACT_APP_BASE = process.env.REACT_APP_BASE;
 
   useEffect(() => {
+    // localStorage에서 토큰 확인
+    const myToken = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!myToken); // 토큰이 존재하면 true
+
     // 후보 정보 가져오기
     fetch(`${REACT_APP_BASE}/candidate/${id}`)
       .then((response) => {
@@ -256,25 +261,38 @@ const CandidateInfo = () => {
         }}
       >
         <ModalContent>
-          <ModalTitle>{selectedPromise}</ModalTitle>
-          {isLoading ? (
-            <ModalLoadingContainer>
-              <img
-                src={GptPending}
-                alt="Loading..."
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  marginBottom: "20px",
-                  marginTop: "20px",
-                }}
-              />
-              <ModalParagraph>AI가 답변을 가져오고 있어요</ModalParagraph>
-            </ModalLoadingContainer>
+          {isLoggedIn ? (
+            // 로그인된 경우의 내용
+            <>
+              <ModalTitle>{selectedPromise}</ModalTitle>
+              {isLoading ? (
+                <ModalLoadingContainer>
+                  <img
+                    src={GptPending}
+                    alt="Loading..."
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      marginBottom: "20px",
+                      marginTop: "20px",
+                    }}
+                  />
+                  <ModalParagraph>AI가 답변을 가져오고 있어요</ModalParagraph>
+                </ModalLoadingContainer>
+              ) : (
+                <ModalExplanationContainer>
+                  <ModalParagraph>{explanation}</ModalParagraph>
+                </ModalExplanationContainer>
+              )}
+            </>
           ) : (
-            <ModalExplanationContainer>
-              <ModalParagraph>{explanation}</ModalParagraph>
-            </ModalExplanationContainer>
+            // 로그인되지 않은 경우의 내용
+            <>
+              <ModalTitle>로그인 후에 이용하세요!</ModalTitle>
+              <ModalSubtitle>
+                이 기능은 로그인한 사용자만 이용 가능합니다
+              </ModalSubtitle>
+            </>
           )}
           <ModalButton onClick={closeExplanationModal}>닫기</ModalButton>
         </ModalContent>

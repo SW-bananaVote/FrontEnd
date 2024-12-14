@@ -32,7 +32,7 @@ const SubCard = () => {
         </SubBox>
         <SubBox>
           <SubBoxText>
-            지역별 후보자 <br></br> 공약 확인
+            날짜별 <br></br>뉴스 확인
           </SubBoxText>
           <SubBoxIcon src={news_image}></SubBoxIcon>
         </SubBox>
